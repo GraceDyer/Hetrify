@@ -1,0 +1,32 @@
+CBMC version 5.95.1 (cbmc-5.95.1) 64-bit x86_64 linux
+Parsing benchmarks/arith_gen.c
+Converting
+Type-checking arith_gen
+Generating GOTO Program
+Adding CPROVER library (x86_64)
+Removal of function pointers and virtual functions
+Generic Property Instrumentation
+Running with 8 object bits, 56 offset bits (default)
+Starting Bounded Model Checking
+Runtime Symex: 0.0126962s
+size of program expression: 203 steps
+simple slicing removed 0 assignments
+Generated 11 VCC(s), 0 remaining after simplification
+Runtime Postprocess Equation: 2.53e-05s
+
+** Results:
+benchmarks/arith_gen.c function main
+[main.assertion.1] line 194 assertion assert_ret == 1: SUCCESS
+[main.assertion.2] line 195 assertion assert_ret1 == 1: SUCCESS
+[main.assertion.3] line 196 assertion assert_ret2 == 1: SUCCESS
+[main.assertion.4] line 197 assertion assert_ret3 == 1: SUCCESS
+[main.assertion.5] line 198 assertion assert_ret4 == 1: SUCCESS
+[main.assertion.6] line 199 assertion assert_ret5 == 1: SUCCESS
+[main.assertion.7] line 200 assertion assert_ret6 == 1: SUCCESS
+[main.assertion.8] line 201 assertion assert_ret7 == 1: SUCCESS
+[main.assertion.9] line 202 assertion assert_ret8 == 1: SUCCESS
+[main.assertion.10] line 203 assertion assert_ret9 == 1: SUCCESS
+[main.assertion.11] line 204 assertion assert_ret10 == 1: SUCCESS
+
+** 0 of 11 failed (1 iterations)
+VERIFICATION SUCCESSFUL

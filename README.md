@@ -33,6 +33,7 @@ If you prefer to set up the environment manually on Ubuntu 22.04 or a compatible
 4. **libxml2**: A library for parsing XML documents.
 5. **libelf1**: A library to handle ELF (Executable and Linkable Format) files.
 6. **Python packages**: `tqdm` for progress bar and `pyelftools` for working with ELF files.
+7. **Rust (rustc)**: Rust compiler with support for RISC-V architecture, enabling safe and performant cross-compilation.
 
 To set up the environment manually, follow these steps:
 ```sh
@@ -53,8 +54,18 @@ tar -xvf riscv64-elf-ubuntu-22.04-nightly-2023.01.31-nightly.tar.gz
 sudo mv riscv64-unknown-elf /opt/riscv
 echo 'export PATH=/opt/riscv/bin:$PATH' >> ~/.bashrc
 source ~/.bashrc
-```
 
+
+# Install Rust and rustup
+curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh
+source $HOME/.cargo/env
+
+# Add RISC-V target support
+rustup target add riscv64gc-unknown-none-elf
+
+# Verify installation
+rustc --version
+```
 
 
 
@@ -65,7 +76,8 @@ source ~/.bashrc
 - **EXAMPLE**: Contains example programs from the paper.
 - **Hetrify**: The verification transformation tool designed in this paper.
 - **ae**: Auxiliary analysis tool for binary files. Hetrify invokes the `ae` tool during its operation.
-
+- **Add_EX1**: Contains datasets and results for comparison experiments between Hetrify, IDA Pro, and Ghidra.
+- **Add_EX2**: Contains datasets and results for the verification experiments of Rust programs.
 ## Supported Functions of Hetrify
 
 Hetrify supports the transformation of the following types of code:
@@ -74,7 +86,7 @@ Hetrify supports the transformation of the following types of code:
 - C programs (.c)
 - C mixed with assembly programs (.c)
 - RISC-V static library code (.a)
-
+- Rust programs (.rs)
 ## Basic Usage of Hetrify
 
 Assume you want to verify the program `./bAnd1.s`. You can run Hetrify with the following command:
@@ -126,3 +138,36 @@ python3 solve.py --dir conversion/T --unwind 20 --output T_20.csv --timeout 3000
 ```
 
 After all programs are verified, a file named `T_20.csv` will be generated, recording the corresponding verification results.
+
+
+## Additional Experiment 1
+
+All files for Additional Experiment 1 are stored in the `Add_EX1` folder, including datasets and results for comparison experiments between Hetrify, IDA Pro, and Ghidra. The `solve.py` script is used to compare the analysis results across these tools, with input files located in the `IDA`, `Ghidra`, and `Hetrify` subfolders.
+
+### Example Usage
+
+Assume you want to compare all files in the `Ghidra` subfolder with the IDA Pro and Ghidra results and store the output in `T_100.csv`. You can run the following command:
+
+```sh
+cd Add_EX1
+python3 solve.py --dir Ghidra/T --unwind 20 --output T_20.csv --timeout 3000
+```
+
+After running the script, a file named `T_20.csv` will be generated, containing the comparison results for each tool.
+
+---
+
+## Additional Experiment 2
+
+All files for Additional Experiment 2 are stored in the `Add_EX2` folder, containing datasets and results for Rust program verification experiments. The `solve.py` script, which is specifically designed for processing Rust programs, is used for verification. Rust program files are located in the `benchmarks` folders.
+
+### Example Usage
+
+To verify all Rust files in the `benchmarks` folder with a loop unwind value of 50 and store the output in `result.csv`, you can use the following command:
+
+```sh
+cd Add_EX2
+python3 solve.py benchmarks 
+```
+
+Once verification is complete, a file named `result.csv` will be created, recording the verification results for the Rust programs.
